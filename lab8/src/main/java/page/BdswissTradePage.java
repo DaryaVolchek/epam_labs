@@ -16,7 +16,7 @@ import static waits.ExplicitWaiter.waitForElementLocatedBy;
 public class BdswissTradePage {
     private WebDriver driver;
 
-    @FindBy(xpath = "//label[@class='btn' and @data-cy='all']")
+    @FindBy(xpath = "//label[@class='btn' and @data-cy='all']/input")
     private WebElement assetGroupAll;
     @FindBy(id = "forexTrader")
     private WebElement frameForexTrader;
@@ -34,15 +34,15 @@ public class BdswissTradePage {
         PageFactory.initElements(driver, this);
     }
 
-    public BdswissTradePage getAssetGroupAll() {
+    public BdswissTradePage getAssetGroupAll() throws InterruptedException {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
-        waitForElementLocatedBy(driver, By.xpath("//label[@class='btn' and @data-cy='all']"));
+        waitForElementLocatedBy(driver, By.xpath("//label[@class='btn' and @data-cy='all']/input"));
         assetGroupAll.click();
         driver.switchTo().defaultContent();
         return this;
     }
 
-    public BdswissTradePage addSomeCurrencyInFavourite() {
+    public BdswissTradePage addSomeCurrencyInFavourite() throws InterruptedException {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
         waitForElementLocatedBy(driver, By.xpath("//*[@title='favourite']"));
         favourites.get(0).click();
@@ -51,7 +51,7 @@ public class BdswissTradePage {
         return this;
     }
 
-    public BdswissTradePage getAssetGroupFavourite() {
+    public BdswissTradePage getAssetGroupFavourite() throws InterruptedException {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
         waitForElementLocatedBy(driver, By.xpath("//label[@class='btn' and @data-cy='favourites']"));
         assetGroupFavourite.click();
@@ -59,25 +59,29 @@ public class BdswissTradePage {
         return this;
     }
 
-    public int getNumberOfFavourites() {
+    public int getNumberOfFavourites() throws InterruptedException {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
         waitForElementLocatedBy(driver, By.xpath("//*[@role='rowgroup']"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.numberOfElementsToBe(By.xpath("//*[@role='rowgroup']"), 2));
         int number = listOfFavouritesValues.size();
-        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+//        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
         driver.switchTo().defaultContent();
         return number;
     }
 
-    public BdswissTradePage deleteFromFavourites() {
+    public BdswissTradePage deleteFromFavourites() throws InterruptedException {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
         waitForElementLocatedBy(driver, By.xpath("//i[@class='favourite icon-star-full ']"));
-        for (WebElement element : valuesInFavourite) element.click();
+        valuesInFavourite.get(1).click();
+        valuesInFavourite.get(0).click();
         driver.switchTo().defaultContent();
         return this;
     }
 
-    public static void waitFrameToBeAvailableAndSwitch(WebDriver driver, WebElement element){
+    public static void waitFrameToBeAvailableAndSwitch(WebDriver driver, WebElement element) throws InterruptedException {
+        Thread.sleep(2000);
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.
                 frameToBeAvailableAndSwitchToIt(element));
     }

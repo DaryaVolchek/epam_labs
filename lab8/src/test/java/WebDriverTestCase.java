@@ -9,7 +9,6 @@ import page.BdswissTradePage;
 
 
 public class WebDriverTestCase {
-
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -19,7 +18,7 @@ public class WebDriverTestCase {
     }
 
     @Test(description = "test case for check favourites")
-    public void addToFavouriteTest() {
+    public void addToFavouriteTest() throws InterruptedException {
         BdswissTradePage assetGroupFavourite = new BdswissHomePage(driver)
                 .openPage()
                 .inputEmail("darya.solig.01@gmail.com")
