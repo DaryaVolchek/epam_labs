@@ -62,7 +62,7 @@ public class BdswissTradePage {
     public int getNumberOfFavourites() {
         waitFrameToBeAvailableAndSwitch(driver, frameForexTrader);
         waitForElementLocatedBy(driver, By.xpath("//*[@role='rowgroup']"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         int number = listOfFavouritesValues.size();
         driver.manage().timeouts().implicitlyWait(Duration.ZERO);
         driver.switchTo().defaultContent();
