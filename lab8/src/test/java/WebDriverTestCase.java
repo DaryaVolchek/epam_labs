@@ -29,9 +29,9 @@ public class WebDriverTestCase {
                 .getAssetGroupAll()
                 .addSomeCurrencyInFavourite()
                 .getAssetGroupFavourite();
-        int expectRes = assetGroupFavourite.getNumberOfFavourites();
+        int expectResult = assetGroupFavourite.getNumberOfFavourites();
         assetGroupFavourite.deleteFromFavourites();
-        Assert.assertEquals(expectRes, 2);
+        Assert.assertEquals(expectResult, 2);
     }
 
     @AfterMethod(alwaysRun = true)
