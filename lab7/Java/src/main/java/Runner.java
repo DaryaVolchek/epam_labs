@@ -5,6 +5,8 @@ import Planes.Plane;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Runner {
     static List<Plane> planes = Arrays.asList(
